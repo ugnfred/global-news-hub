@@ -857,6 +857,9 @@ input, select { font-family: inherit; }
 .modal-img { width: 100%; height: 260px; object-fit: cover; }
 .modal-body { padding: 1.25rem 1.5rem 1.5rem; }
 .modal-body p { font-size: .92rem; line-height: 1.7; color: var(--clr-text-muted); margin-bottom: .75rem; }
+.modal-description { font-size: 1rem !important; font-weight: 500; color: var(--clr-text) !important; line-height: 1.65 !important; margin-bottom: 1rem !important; }
+.modal-article-body { border-top: 1px solid var(--clr-border); padding-top: 1rem; margin-bottom: 1.25rem; }
+.modal-article-body p { font-size: .93rem; line-height: 1.75; color: var(--clr-text); margin-bottom: .9rem; }
 .btn-read-full {
   display: inline-flex;
   align-items: center;

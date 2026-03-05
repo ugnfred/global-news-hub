@@ -39,11 +39,11 @@ const CONFIG = {
   },
 
   // ── Gold price (GoldAPI.io) ───────────────────────────────────────────────
-  GOLD_API_KEY: "",           // e.g. "goldapi-xxxx"
+  GOLD_API_KEY: "goldapi-316xx3osmmdghnyc-io",           // e.g. "goldapi-xxxx"
   GOLD_API_URL: "https://www.goldapi.io/api/XAU/USD",
 
   // ── Finance (Alpha Vantage) ───────────────────────────────────────────────
-  ALPHA_VANTAGE_KEY: "",      // e.g. "ABCDEFGHIJ"
+  ALPHA_VANTAGE_KEY: "OBKDKVNQSJ1748NI",      // e.g. "ABCDEFGHIJ"
   ALPHA_VANTAGE_URL: "https://www.alphavantage.co/query",
 
   // ── Google Analytics (optional) ──────────────────────────────────────────

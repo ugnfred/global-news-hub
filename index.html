@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ── SEO Meta ─────────────────────────────────────────────────────── -->
+  <title>Global News Hub — World News, Politics, Sports, Finance & More</title>
+  <meta name="description" content="Stay informed with Global News Hub — your one-stop source for breaking world news, top stories, politics, sports, entertainment, gold prices, and financial markets. Filter news by country, region, and category.">
+  <meta name="keywords" content="world news, breaking news, top stories, politics, sports, entertainment, finance, gold price, international news, local news, country news">
+  <meta name="author" content="Global News Hub">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://global-news-hub.com/">
+
+  <!-- ── Open Graph ───────────────────────────────────────────────────── -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://global-news-hub.com/">
+  <meta property="og:title"       content="Global News Hub — World News, Politics, Sports, Finance">
+  <meta property="og:description" content="Breaking news, top stories and financial data from every corner of the globe — filtered by country, region, and category.">
+  <meta property="og:image"       content="https://global-news-hub.com/assets/og-image.png">
+
+  <!-- ── Twitter Card ─────────────────────────────────────────────────── -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Global News Hub">
+  <meta name="twitter:description" content="Breaking news, top stories and financial data from around the world.">
+  <meta name="twitter:image"       content="https://global-news-hub.com/assets/og-image.png">
+
+  <!-- ── Structured Data (JSON-LD) ────────────────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NewsMediaOrganization",
+    "name": "Global News Hub",
+    "url": "https://global-news-hub.com",
+    "logo": "https://global-news-hub.com/assets/logo.png",
+    "description": "Global News Hub aggregates news from around the world, covering politics, sports, entertainment, finance, and more.",
+    "sameAs": [
+      "https://twitter.com/globalnewshub",
+      "https://facebook.com/globalnewshub"
+    ]
+  }
+  </script>
+
+  <!-- ── Fonts & Icons ────────────────────────────────────────────────── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <!-- ── Stylesheet ───────────────────────────────────────────────────── -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- ── Favicon ──────────────────────────────────────────────────────── -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
+</head>
+
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     TOP BAR
+══════════════════════════════════════════════════════════════════════════════ -->
+<div class="topbar" role="complementary" aria-label="Site information">
+  <div class="container">
+    <span class="topbar-date" id="currentDate" aria-live="polite"></span>
+    <nav class="topbar-links" aria-label="Quick links">
+      <a href="#finance-section">Markets</a>
+      <a href="#gold-section">Gold</a>
+      <a href="#sports-section">Sports</a>
+      <a href="#entertainment-section">Entertainment</a>
+      <a href="#politics-section">Politics</a>
+    </nav>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     HEADER
+══════════════════════════════════════════════════════════════════════════════ -->
+<header class="site-header" role="banner">
+  <div class="container">
+    <div class="header-inner">
+
+      <!-- Logo -->
+      <a href="/" class="site-logo" aria-label="Global News Hub — Home">
+        <div class="logo-icon" aria-hidden="true">GN</div>
+        <div class="logo-text">
+          <strong>Global News Hub</strong>
+          <span>Your world. Your news.</span>
+        </div>
+      </a>
+
+      <!-- Search -->
+      <div class="search-bar" role="search">
+        <label for="searchInput" class="sr-only">Search news</label>
+        <input type="search" id="searchInput" placeholder="Search news, topics, countries…" autocomplete="off" aria-label="Search news">
+        <button id="searchBtn" aria-label="Submit search"><i class="fas fa-search" aria-hidden="true"></i></button>
+      </div>
+
+      <!-- Actions -->
+      <div class="nav-actions" aria-label="Site actions">
+        <button class="btn-icon" id="darkModeToggle" aria-label="Toggle dark mode" title="Toggle dark/light mode">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </button>
+        <button class="btn-icon" aria-label="Notifications" title="Notifications">
+          <i class="fas fa-bell" aria-hidden="true"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     BREAKING NEWS TICKER
+══════════════════════════════════════════════════════════════════════════════ -->
+<div class="news-ticker" role="marquee" aria-label="Breaking news ticker" aria-live="polite">
+  <div class="container">
+    <div class="ticker-inner">
+      <span class="ticker-label" aria-hidden="true">🔴 LIVE</span>
+      <div class="ticker-track">
+        <div class="ticker-items" id="tickerItems" aria-label="Latest headlines">
+          <span class="ticker-item">Loading latest headlines…</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     CATEGORY NAVIGATION
+══════════════════════════════════════════════════════════════════════════════ -->
+<nav class="category-nav" aria-label="News categories">
+  <div class="container" id="categoryNav" role="tablist" aria-label="Filter news by category">
+    <!-- Populated by JS -->
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     FILTERS BAR
+══════════════════════════════════════════════════════════════════════════════ -->
+<section class="filters-bar" aria-label="News filters">
+  <div class="container filters-inner">
+
+    <!-- Scope chips -->
+    <span class="filter-label" id="scopeLabel">Show:</span>
+    <div role="group" aria-labelledby="scopeLabel">
+      <button class="filter-chip scope-chip active" data-scope="all"           aria-pressed="true">🌐 All</button>
+      <button class="filter-chip scope-chip"        data-scope="international" aria-pressed="false">✈️ International</button>
+      <button class="filter-chip scope-chip"        data-scope="local"         aria-pressed="false">📍 Local</button>
+    </div>
+
+    <!-- Country dropdown -->
+    <span class="filter-label" id="countryLabel">Country:</span>
+    <label for="countryFilter" class="sr-only">Select country</label>
+    <select id="countryFilter" class="filter-select" aria-labelledby="countryLabel" title="Filter by country">
+      <!-- Populated by JS -->
+    </select>
+
+    <!-- Region / State dropdown -->
+    <span class="filter-label" id="regionLabel">Region:</span>
+    <label for="regionFilter" class="sr-only">Select region or state</label>
+    <select id="regionFilter" class="filter-select" aria-labelledby="regionLabel" title="Filter by region or state">
+      <option value="">All Regions / States</option>
+    </select>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════════════════════════════════════════════════ -->
+<main id="main-content" class="main-layout">
+
+  <!-- ── Left / Centre Column ──────────────────────────────────────────── -->
+  <div class="content-col">
+
+    <!-- Hero Section -->
+    <section class="hero-section" aria-label="Top stories">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fas fa-fire" aria-hidden="true"></i> <span>Top</span> Stories</h2>
+      </div>
+      <div class="hero-grid" id="heroGrid" aria-label="Featured articles">
+        <!-- Skeleton placeholder -->
+        <div class="hero-main">
+          <div class="skeleton-card">
+            <div class="skeleton skeleton-img" style="height:340px"></div>
+            <div class="skeleton-body">
+              <div class="skeleton skeleton-line medium"></div>
+              <div class="skeleton skeleton-line"></div>
+              <div class="skeleton skeleton-line short"></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="skeleton-card">
+            <div class="skeleton skeleton-img" style="height:190px"></div>
+            <div class="skeleton-body">
+              <div class="skeleton skeleton-line medium"></div>
+              <div class="skeleton skeleton-line short"></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="skeleton-card">
+            <div class="skeleton skeleton-img" style="height:190px"></div>
+            <div class="skeleton-body">
+              <div class="skeleton skeleton-line medium"></div>
+              <div class="skeleton skeleton-line short"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Ad Slot (replace with your AdSense code) ───────────────────── -->
+    <div class="ad-slot" role="complementary" aria-label="Advertisement">
+      <span>Advertisement</span>
+      <span><!-- Replace with Google AdSense <ins> tag --></span>
+    </div>
+
+    <!-- News Section -->
+    <section id="newsSection" aria-label="News articles" style="margin-top:1.5rem">
+      <div class="section-header">
+        <h2 class="section-title">
+          <i class="fas fa-newspaper" aria-hidden="true"></i>
+          <span id="newsSectionTitle">Latest News</span>
+        </h2>
+        <span id="resultsCount" style="font-size:.8rem;color:var(--clr-text-muted)" aria-live="polite"></span>
+      </div>
+
+      <!-- News Grid -->
+      <div class="news-grid" id="newsGrid" aria-label="News articles grid">
+        <!-- Skeleton placeholders -->
+        <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line medium"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line short"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line medium"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line short"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line medium"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line short"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line medium"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line short"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line medium"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line short"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line medium"></div><div class="skeleton skeleton-line"></div><div class="skeleton skeleton-line short"></div></div></div>
+      </div>
+
+      <!-- Pagination -->
+      <nav class="pagination" id="pagination" aria-label="News pagination"></nav>
+    </section>
+
+  </div><!-- /.content-col -->
+
+  <!-- ── Sidebar ────────────────────────────────────────────────────────── -->
+  <aside class="sidebar" aria-label="Widgets">
+
+    <!-- Trending -->
+    <div class="widget">
+      <div class="widget-header"><i class="fas fa-chart-bar" aria-hidden="true"></i> Trending Now</div>
+      <div class="widget-body">
+        <div class="trending-list" id="trendingList" aria-label="Trending articles">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Gold Price -->
+    <div class="widget" id="goldSection">
+      <div class="widget-header" style="background:#b7791f"><i class="fas fa-coins" aria-hidden="true"></i> Gold Price (XAU/USD)</div>
+      <div class="widget-body" id="goldWidget" aria-live="polite" aria-label="Gold price widget">
+        <div class="skeleton skeleton-line" style="height:40px;margin-bottom:.5rem"></div>
+        <div class="skeleton skeleton-line medium"></div>
+        <div class="skeleton skeleton-line short"></div>
+      </div>
+    </div>
+
+    <!-- Markets -->
+    <div class="widget" id="financeSection">
+      <div class="widget-header" style="background:#1a6934"><i class="fas fa-chart-line" aria-hidden="true"></i> Financial Markets</div>
+      <div class="widget-body" id="marketsWidget" aria-live="polite" aria-label="Financial markets widget">
+        <div class="skeleton skeleton-line" style="margin-bottom:.5rem"></div>
+        <div class="skeleton skeleton-line" style="margin-bottom:.5rem"></div>
+        <div class="skeleton skeleton-line" style="margin-bottom:.5rem"></div>
+        <div class="skeleton skeleton-line medium"></div>
+      </div>
+    </div>
+
+    <!-- Ad Slot (sidebar) -->
+    <div class="ad-slot" role="complementary" aria-label="Advertisement">
+      <span>Advertisement</span>
+    </div>
+
+    <!-- Quick links by region -->
+    <div class="widget">
+      <div class="widget-header"><i class="fas fa-globe-americas" aria-hidden="true"></i> News by Region</div>
+      <div class="widget-body">
+        <ul style="display:flex;flex-direction:column;gap:.45rem;font-size:.85rem" aria-label="Regional news links">
+          <li><a href="#" onclick="selectRegion('us')" style="display:flex;align-items:center;gap:.5rem;color:var(--clr-text)">🇺🇸 <span>United States</span></a></li>
+          <li><a href="#" onclick="selectRegion('gb')" style="display:flex;align-items:center;gap:.5rem;color:var(--clr-text)">🇬🇧 <span>United Kingdom</span></a></li>
+          <li><a href="#" onclick="selectRegion('in')" style="display:flex;align-items:center;gap:.5rem;color:var(--clr-text)">🇮🇳 <span>India</span></a></li>
+          <li><a href="#" onclick="selectRegion('au')" style="display:flex;align-items:center;gap:.5rem;color:var(--clr-text)">🇦🇺 <span>Australia</span></a></li>
+          <li><a href="#" onclick="selectRegion('ca')" style="display:flex;align-items:center;gap:.5rem;color:var(--clr-text)">🇨🇦 <span>Canada</span></a></li>
+          <li><a href="#" onclick="selectRegion('de')" style="display:flex;align-items:center;gap:.5rem;color:var(--clr-text)">🇩🇪 <span>Germany</span></a></li>
+          <li><a href="#" onclick="selectRegion('fr')" style="display:flex;align-items:center;gap:.5rem;color:var(--clr-text)">🇫🇷 <span>France</span></a></li>
+          <li><a href="#" onclick="selectRegion('jp')" style="display:flex;align-items:center;gap:.5rem;color:var(--clr-text)">🇯🇵 <span>Japan</span></a></li>
+          <li><a href="#" onclick="selectRegion('br')" style="display:flex;align-items:center;gap:.5rem;color:var(--clr-text)">🇧🇷 <span>Brazil</span></a></li>
+          <li><a href="#" onclick="selectRegion('za')" style="display:flex;align-items:center;gap:.5rem;color:var(--clr-text)">🇿🇦 <span>South Africa</span></a></li>
+        </ul>
+      </div>
+    </div>
+
+  </aside><!-- /.sidebar -->
+
+</main><!-- /.main-layout -->
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════════════════════════════ -->
+<footer class="site-footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+
+      <div class="footer-brand">
+        <a href="/" class="site-logo" aria-label="Global News Hub Home">
+          <div class="logo-icon" aria-hidden="true">GN</div>
+          <div class="logo-text">
+            <strong>Global News Hub</strong>
+            <span>Your world. Your news.</span>
+          </div>
+        </a>
+        <p>Global News Hub aggregates breaking news from reliable sources worldwide, offering real-time coverage across politics, sports, entertainment, finance, technology, and more — tailored to your location and interests.</p>
+        <div class="social-links" style="margin-top:1rem" aria-label="Social media">
+          <a href="#" class="social-link" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+          <a href="#" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
+          <a href="#" class="social-link" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+          <a href="#" class="social-link" aria-label="YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+          <a href="#" class="social-link" aria-label="RSS Feed"><i class="fas fa-rss" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <nav class="footer-col" aria-label="Categories">
+        <h4>Categories</h4>
+        <ul>
+          <li><a href="#" onclick="selectCategory('world')">🌍 World</a></li>
+          <li><a href="#" onclick="selectCategory('politics')">🗳️ Politics</a></li>
+          <li><a href="#" onclick="selectCategory('sports')">⚽ Sports</a></li>
+          <li><a href="#" onclick="selectCategory('entertainment')">🎬 Entertainment</a></li>
+          <li><a href="#" onclick="selectCategory('finance')">💰 Finance</a></li>
+          <li><a href="#" onclick="selectCategory('technology')">💻 Technology</a></li>
+          <li><a href="#" onclick="selectCategory('health')">🏥 Health</a></li>
+          <li><a href="#" onclick="selectCategory('science')">🔬 Science</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="Top regions">
+        <h4>Top Regions</h4>
+        <ul>
+          <li><a href="#" onclick="selectRegion('us')">🇺🇸 United States</a></li>
+          <li><a href="#" onclick="selectRegion('gb')">🇬🇧 United Kingdom</a></li>
+          <li><a href="#" onclick="selectRegion('in')">🇮🇳 India</a></li>
+          <li><a href="#" onclick="selectRegion('au')">🇦🇺 Australia</a></li>
+          <li><a href="#" onclick="selectRegion('ca')">🇨🇦 Canada</a></li>
+          <li><a href="#" onclick="selectRegion('de')">🇩🇪 Germany</a></li>
+          <li><a href="#" onclick="selectRegion('cn')">🇨🇳 China</a></li>
+          <li><a href="#" onclick="selectRegion('br')">🇧🇷 Brazil</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-col" aria-label="Site information">
+        <h4>Information</h4>
+        <ul>
+          <li><a href="/about.html">About Us</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+          <li><a href="/privacy.html">Privacy Policy</a></li>
+          <li><a href="/terms.html">Terms of Use</a></li>
+          <li><a href="/sitemap.xml">Sitemap</a></li>
+          <li><a href="/rss.xml">RSS Feed</a></li>
+          <li><a href="/advertise.html">Advertise</a></li>
+        </ul>
+      </nav>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="copyrightYear"></span> Global News Hub. All rights reserved. News powered by <a href="https://gnews.io" target="_blank" rel="noopener noreferrer" style="color:var(--clr-accent)">GNews API</a>.</p>
+      <p>For entertainment and informational purposes only.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     ARTICLE MODAL
+══════════════════════════════════════════════════════════════════════════════ -->
+<div id="articleModal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Article detail">
+  <div class="modal" id="modalContent" role="document">
+    <!-- Populated by JS -->
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     LOADING OVERLAY
+══════════════════════════════════════════════════════════════════════════════ -->
+<div id="loadingOverlay" class="loading-overlay" role="status" aria-live="polite" aria-label="Loading news">
+  <div class="spinner" aria-hidden="true"></div>
+  <p class="loading-text">Loading latest news…</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     TOAST CONTAINER
+══════════════════════════════════════════════════════════════════════════════ -->
+<div id="toastContainer" class="toast-container" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════════════════════════════════════════ -->
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script>
+  // Copyright year
+  document.getElementById("copyrightYear").textContent = new Date().getFullYear();
+
+  // Quick-select helpers called from inline onclick attributes
+  function selectCategory(catId) {
+    document.querySelector(`[data-cat="${catId}"]`)?.click();
+    document.querySelector(".category-nav")?.scrollIntoView({ behavior: "smooth" });
+    return false;
+  }
+  function selectRegion(countryCode) {
+    const sel = document.getElementById("countryFilter");
+    if (sel) {
+      sel.value = countryCode;
+      sel.dispatchEvent(new Event("change"));
+    }
+    document.querySelector(".filters-bar")?.scrollIntoView({ behavior: "smooth" });
+    return false;
+  }
+
+  // Scope chip ARIA pressed state
+  document.querySelectorAll(".scope-chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      document.querySelectorAll(".scope-chip").forEach(c => c.setAttribute("aria-pressed", "false"));
+      chip.setAttribute("aria-pressed", "true");
+    });
+  });
+</script>
+
+</body>
+</html>

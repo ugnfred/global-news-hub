@@ -51,7 +51,7 @@ const CONFIG = {
 
   // ── Site meta ─────────────────────────────────────────────────────────────
   SITE_NAME: "Global News Hub",
-  SITE_URL:  "https://global-news-hub.com",  // update when you deploy
+  SITE_URL:  "https://global-news-hub-dusky.vercel.app",
 
   // ── Internal mock URL prefix (used to suppress "Read full article" links) ─
   MOCK_URL_PREFIX: "#mock",

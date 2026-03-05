@@ -56,14 +56,14 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
 </head>
 
+<body>
+
 <!-- ══════════════════════════════════════════════════════════════════════════
      REFRESH PROGRESS BAR (fixed, top of viewport)
 ══════════════════════════════════════════════════════════════════════════════ -->
 <div class="refresh-progress-bar" role="presentation" aria-hidden="true">
   <div class="refresh-progress-fill" id="refreshFill"></div>
 </div>
-
-<body>
 
 <!-- ══════════════════════════════════════════════════════════════════════════
      TOP BAR
@@ -72,11 +72,11 @@
   <div class="container">
     <span class="topbar-date" id="currentDate" aria-live="polite"></span>
     <nav class="topbar-links" aria-label="Quick links">
-      <a href="#finance-section">Markets</a>
-      <a href="#gold-section">Gold</a>
-      <a href="#sports-section">Sports</a>
-      <a href="#entertainment-section">Entertainment</a>
-      <a href="#politics-section">Politics</a>
+      <a href="#finance-section" onclick="return scrollToSection('finance-section')">Markets</a>
+      <a href="#gold-section" onclick="return scrollToSection('gold-section')">Gold</a>
+      <a href="#" onclick="return selectCategory('sports')">Sports</a>
+      <a href="#" onclick="return selectCategory('entertainment')">Entertainment</a>
+      <a href="#" onclick="return selectCategory('politics')">Politics</a>
     </nav>
   </div>
 </div>
@@ -287,7 +287,7 @@
     </div>
 
     <!-- Gold Price -->
-    <div class="widget" id="goldSection">
+    <div class="widget" id="gold-section">
       <div class="widget-header" style="background:#b7791f"><i class="fas fa-coins" aria-hidden="true"></i> Gold Price (XAU/USD)</div>
       <div class="widget-body" id="goldWidget" aria-live="polite" aria-label="Gold price widget">
         <div class="skeleton skeleton-line" style="height:40px;margin-bottom:.5rem"></div>
@@ -297,7 +297,7 @@
     </div>
 
     <!-- Markets -->
-    <div class="widget" id="financeSection">
+    <div class="widget" id="finance-section">
       <div class="widget-header" style="background:#1a6934"><i class="fas fa-chart-line" aria-hidden="true"></i> Financial Markets</div>
       <div class="widget-body" id="marketsWidget" aria-live="polite" aria-label="Financial markets widget">
         <div class="skeleton skeleton-line" style="margin-bottom:.5rem"></div>
@@ -456,6 +456,10 @@
       sel.dispatchEvent(new Event("change"));
     }
     document.querySelector(".filters-bar")?.scrollIntoView({ behavior: "smooth" });
+    return false;
+  }
+  function scrollToSection(id) {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     return false;
   }
 

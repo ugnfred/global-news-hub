@@ -20,6 +20,24 @@ const CONFIG = {
   GNEWS_BASE_URL: "https://gnews.io/api/v4",
   NEWS_PAGE_SIZE: 10,
 
+  // ── Auto-refresh ──────────────────────────────────────────────────────────
+  // How often (seconds) the page silently polls for new articles & market data.
+  // Keep at 60 for a GNews free-tier key (100 req/day).  Set to 0 to disable.
+  AUTO_REFRESH_INTERVAL: 60,
+
+  // How many refresh cycles to wait before refreshing gold/market widgets.
+  // (e.g. 5 × 60s = every 5 minutes, staying well within free-tier limits)
+  MARKET_REFRESH_EVERY_N_CYCLES: 5,
+
+  // ── Relevance scoring weights (must sum to 100) ───────────────────────────
+  // Each component is scored 0–100 and then multiplied by its weight.
+  RELEVANCE_WEIGHTS: {
+    RECENCY:   40,   // how recently the article was published
+    URGENCY:   30,   // high-signal keywords (breaking, crash, surge…)
+    MARKET:    20,   // finance / economics keyword density
+    CATEGORY:  10,   // editorial importance of the category
+  },
+
   // ── Gold price (GoldAPI.io) ───────────────────────────────────────────────
   GOLD_API_KEY: "",           // e.g. "goldapi-xxxx"
   GOLD_API_URL: "https://www.goldapi.io/api/XAU/USD",
@@ -34,6 +52,9 @@ const CONFIG = {
   // ── Site meta ─────────────────────────────────────────────────────────────
   SITE_NAME: "Global News Hub",
   SITE_URL:  "https://global-news-hub.com",  // update when you deploy
+
+  // ── Internal mock URL prefix (used to suppress "Read full article" links) ─
+  MOCK_URL_PREFIX: "#mock",
 
   // ── Supported countries (ISO-2 code → label) ─────────────────────────────
   COUNTRIES: {

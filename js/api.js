@@ -130,6 +130,67 @@ const MOCK_ARTICLES = [
   },
 ];
 
+/* ── Extra articles used only for mock-mode refresh cycling ──────────────── */
+const MOCK_REFRESH_POOL = [
+  {
+    title: "BREAKING: Major Earthquake Strikes Pacific Region, Tsunami Warning Issued",
+    description: "A powerful 7.8-magnitude earthquake has struck off the coast, prompting emergency tsunami warnings for six nations.",
+    content: "Emergency services have been placed on high alert following a major seismic event measuring 7.8 on the Richter scale...",
+    url: "#mock-r1",
+    image: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=800&q=80",
+    source: { name: "Breaking News Wire", url: "#" },
+    category: "world",
+  },
+  {
+    title: "Gold Hits New Intraday High as Fed Minutes Signal Caution on Rate Cuts",
+    description: "Precious metals surged after Federal Reserve meeting minutes revealed a more dovish stance than markets expected.",
+    content: "Gold traders scrambled to buy as minutes from the latest Federal Reserve meeting revealed a shift in tone...",
+    url: "#mock-r2",
+    image: "https://images.unsplash.com/photo-1610375461246-83df859d849d?w=800&q=80",
+    source: { name: "Reuters Finance", url: "#" },
+    category: "finance",
+  },
+  {
+    title: "AI Sector Leads Broad Market Rally as NASDAQ Surges 2.3%",
+    description: "Artificial intelligence stocks drove a broad recovery, with the NASDAQ gaining over 2% and tech giants outperforming.",
+    content: "A powerful rally in technology shares, led by artificial intelligence companies, pushed the NASDAQ higher...",
+    url: "#mock-r3",
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
+    source: { name: "Market Watch", url: "#" },
+    category: "finance",
+  },
+  {
+    title: "Emergency G7 Summit Called Amid Escalating Trade Tensions",
+    description: "G7 leaders convene an emergency virtual summit to address rapidly escalating trade disputes and tariff threats.",
+    content: "Leaders of the world's most powerful economies are holding an emergency meeting to discuss trade policy...",
+    url: "#mock-r4",
+    image: "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=800&q=80",
+    source: { name: "AP News", url: "#" },
+    category: "politics",
+  },
+  {
+    title: "Oil Prices Plunge 5% on Surprise OPEC+ Production Increase",
+    description: "Crude oil prices dropped sharply after OPEC+ members agreed to increase production quotas by 500,000 barrels per day.",
+    content: "Oil markets experienced significant volatility after OPEC+ announced an unexpected production increase...",
+    url: "#mock-r5",
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80",
+    source: { name: "Energy Report", url: "#" },
+    category: "business",
+  },
+  {
+    title: "Central Bank Holds Rates Steady; Analysts Predict Cut by Q3",
+    description: "The central bank's latest decision keeps benchmark rates unchanged as policymakers monitor inflation data closely.",
+    content: "In a widely anticipated move, the central bank held interest rates steady at its latest policy meeting...",
+    url: "#mock-r6",
+    image: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=800&q=80",
+    source: { name: "Financial Times", url: "#" },
+    category: "finance",
+  },
+];
+
+// Tracks how many times the mock feed has been refreshed
+let _mockRefreshCycle = 0;
+
 const MOCK_GOLD = {
   price:      2487.35,
   change:     +18.20,
@@ -179,7 +240,20 @@ function mapGNewsArticle(a) {
  * @param {object} opts - { category, country, lang }
  */
 async function fetchTopHeadlines({ category = "", country = "", lang = "en" } = {}) {
-  if (!CONFIG.GNEWS_API_KEY) return MOCK_ARTICLES;
+  if (!CONFIG.GNEWS_API_KEY) {
+    // In mock mode: on the first call return base articles;
+    // on subsequent calls inject one fresh article from the pool per cycle
+    // so the auto-refresh demo works without an API key.
+    _mockRefreshCycle++;
+    if (_mockRefreshCycle === 1) return MOCK_ARTICLES;
+    const poolIdx    = (_mockRefreshCycle - 2) % MOCK_REFRESH_POOL.length;
+    const freshEntry = {
+      ...MOCK_REFRESH_POOL[poolIdx],
+      url:         `${MOCK_REFRESH_POOL[poolIdx].url}-${_mockRefreshCycle}`,
+      publishedAt: new Date().toISOString(),
+    };
+    return [freshEntry, ...MOCK_ARTICLES];
+  }
 
   try {
     const params = { lang };
@@ -225,9 +299,23 @@ async function searchNews(query, { country = "", lang = "en", category = "" } = 
 
 /**
  * Fetch gold price.  Falls back to mock data if key absent.
+ * In mock mode each call slightly varies the price to simulate live movement.
  */
 async function fetchGoldPrice() {
-  if (!CONFIG.GOLD_API_KEY) return MOCK_GOLD;
+  if (!CONFIG.GOLD_API_KEY) {
+    // Simulate live fluctuation: small random walk around base price
+    const delta = (Math.random() - 0.5) * 8;
+    return {
+      price:     +(MOCK_GOLD.price + delta).toFixed(2),
+      change:    +(MOCK_GOLD.change + delta * 0.05).toFixed(2),
+      changePct: +(MOCK_GOLD.changePct + delta * 0.002).toFixed(3),
+      open:      MOCK_GOLD.open,
+      high:      +(Math.max(MOCK_GOLD.high, MOCK_GOLD.price + delta)).toFixed(2),
+      low:       +(Math.min(MOCK_GOLD.low,  MOCK_GOLD.price + delta)).toFixed(2),
+      currency:  "USD",
+      timestamp: new Date().toISOString(),
+    };
+  }
 
   try {
     const res = await fetch(CONFIG.GOLD_API_URL, {
@@ -253,10 +341,16 @@ async function fetchGoldPrice() {
 
 /**
  * Fetch stock market indices.  Returns mock data when key absent.
+ * In mock mode each call adds small random variations to simulate live prices.
  */
 async function fetchMarkets() {
-  // Alpha Vantage free tier is limited; return mock for now unless key provided
-  if (!CONFIG.ALPHA_VANTAGE_KEY) return MOCK_MARKETS;
+  if (!CONFIG.ALPHA_VANTAGE_KEY) {
+    return MOCK_MARKETS.map(m => ({
+      ...m,
+      price:  +(m.price  * (1 + (Math.random() - 0.5) * 0.003)).toFixed(2),
+      change: +(m.change +     (Math.random() - 0.5) * 0.15  ).toFixed(2),
+    }));
+  }
 
   try {
     // Fetch S&P 500 as a representative sample

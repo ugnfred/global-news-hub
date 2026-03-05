@@ -390,6 +390,10 @@ async function _fetchCurrentFeed() {
   }
   const topicQuery = buildTopicQuery(category, region, scope);
   if (topicQuery) return searchNews(topicQuery, { country, category });
+  // For categories not supported as GNews /top-headlines topics, fall back to search
+  if (category && category !== "general" && !GNEWS_VALID_TOPICS.has(category)) {
+    return searchNews(category, { country });
+  }
   return fetchTopHeadlines({ category, country });
 }
 
@@ -678,9 +682,21 @@ function handleSearch() {
 }
 
 /* ── Modal ───────────────────────────────────────────────────────────────── */
+
+/** Splits newline-separated text into escaped HTML paragraph elements. */
+function renderParagraphs(text) {
+  if (!text) return "";
+  return text.split(/\n+/)
+    .map(p => p.trim())
+    .filter(Boolean)
+    .map(p => `<p>${escHtml(p)}</p>`)
+    .join("");
+}
+
 function openModal(article) {
   if (!DOM.articleModal || !DOM.modalContent) return;
   const badge = RELEVANCE.getBadge(article);
+  const hasFullUrl = article.url && article.url !== "#" && !article.url.startsWith(CONFIG.MOCK_URL_PREFIX);
   DOM.modalContent.innerHTML = `
     <div class="modal-header">
       <h2>${escHtml(article.title)}</h2>
@@ -699,9 +715,9 @@ function openModal(article) {
         <span style="color:var(--clr-text-muted)">•</span>
         <time data-iso="${escHtml(article.publishedAt)}">${timeAgo(article.publishedAt)}</time>
       </div>
-      <p>${escHtml(article.description)}</p>
-      <p>${escHtml(article.content)}</p>
-      ${article.url && article.url !== "#" && !article.url.startsWith(CONFIG.MOCK_URL_PREFIX)
+      <p class="modal-description">${escHtml(article.description)}</p>
+      ${article.content ? `<div class="modal-article-body">${renderParagraphs(article.content)}</div>` : ""}
+      ${hasFullUrl
         ? `<a href="${escHtml(article.url)}" target="_blank" rel="noopener noreferrer" class="btn-read-full">
              Read Full Article <i class="fas fa-external-link-alt"></i>
            </a>`

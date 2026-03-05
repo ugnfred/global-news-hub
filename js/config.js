@@ -16,7 +16,7 @@
 
 const CONFIG = {
   // ── News (GNews) ──────────────────────────────────────────────────────────
-  GNEWS_API_KEY: "",          // e.g. "abc123xyz"
+  GNEWS_API_KEY: "69d154c8bd676a12990124e89e2d13ae",          // e.g. "abc123xyz"
   GNEWS_BASE_URL: "https://gnews.io/api/v4",
   NEWS_PAGE_SIZE: 10,
 

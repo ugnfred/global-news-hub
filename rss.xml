@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Global News Hub</title>
+    <link>https://global-news-hub.com</link>
+    <description>Breaking world news — politics, sports, entertainment, finance and more.</description>
+    <language>en</language>
+    <atom:link href="https://global-news-hub.com/rss.xml" rel="self" type="application/rss+xml"/>
+    <!-- Articles are loaded dynamically from the GNews API.
+         To generate a real RSS feed, use a server-side script or a service like
+         FeedBurner / RSS.app to re-publish the GNews feed under your domain. -->
+  </channel>
+</rss>

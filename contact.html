@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us — Global News Hub</title>
+  <meta name="description" content="Get in touch with the Global News Hub team.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
+  <style>
+    .contact-form label { display:block; font-size:.88rem; font-weight:600; margin-bottom:.4rem; color:var(--clr-text); }
+    .contact-form input,
+    .contact-form textarea,
+    .contact-form select {
+      width:100%; padding:.65rem .9rem; border:1px solid var(--clr-border); border-radius:var(--radius-sm);
+      background:var(--clr-bg); color:var(--clr-text); font-size:.9rem; margin-bottom:1.1rem;
+      font-family:inherit; outline:none; transition:border-color .2s;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus { border-color:var(--clr-primary); }
+    .contact-form textarea { min-height:140px; resize:vertical; }
+    .btn-submit {
+      padding:.7rem 2rem; background:var(--clr-primary); color:#fff; border:none;
+      border-radius:50px; font-size:.95rem; font-weight:700; cursor:pointer;
+      transition:background .2s;
+    }
+    .btn-submit:hover { background:var(--clr-primary-dark); }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <a href="/" style="color:rgba(255,255,255,.6);font-size:.8rem">← Back to Global News Hub</a>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="/" class="site-logo">
+        <div class="logo-icon">GN</div>
+        <div class="logo-text"><strong>Global News Hub</strong><span>Your world. Your news.</span></div>
+      </a>
+      <button class="btn-icon" id="darkModeToggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main style="max-width:700px;margin:3rem auto;padding:0 1rem">
+  <div style="background:var(--clr-surface);border-radius:var(--radius-lg);padding:2.5rem;box-shadow:var(--shadow-md)">
+    <h1 style="font-size:2rem;font-weight:800;margin-bottom:.5rem;display:flex;align-items:center;gap:.6rem">
+      <span>✉️</span> Contact Us
+    </h1>
+    <p style="color:var(--clr-text-muted);margin-bottom:2rem;font-size:.95rem">
+      Have a question, tip, or feedback? We'd love to hear from you.
+    </p>
+
+    <form class="contact-form" id="contactForm" novalidate>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 1rem">
+        <div>
+          <label for="firstName">First Name <span style="color:var(--clr-primary)">*</span></label>
+          <input type="text" id="firstName" name="firstName" placeholder="John" required>
+        </div>
+        <div>
+          <label for="lastName">Last Name <span style="color:var(--clr-primary)">*</span></label>
+          <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
+        </div>
+      </div>
+
+      <label for="email">Email Address <span style="color:var(--clr-primary)">*</span></label>
+      <input type="email" id="email" name="email" placeholder="john@example.com" required>
+
+      <label for="subject">Subject</label>
+      <select id="subject" name="subject">
+        <option value="">Select a subject…</option>
+        <option value="general">General Enquiry</option>
+        <option value="tip">News Tip</option>
+        <option value="advertise">Advertising</option>
+        <option value="bug">Report a Bug</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="message">Message <span style="color:var(--clr-primary)">*</span></label>
+      <textarea id="message" name="message" placeholder="Write your message here…" required></textarea>
+
+      <button type="submit" class="btn-submit">Send Message <i class="fas fa-paper-plane" style="margin-left:.4rem"></i></button>
+    </form>
+
+    <div id="formSuccess" style="display:none;margin-top:1.5rem;padding:1rem 1.25rem;background:#d4edda;border-radius:var(--radius-sm);color:#155724;font-weight:600">
+      ✅ Thank you! Your message has been sent. We'll be in touch shortly.
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" style="margin-top:3rem">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© <span id="yr"></span> Global News Hub. All rights reserved.</p>
+      <p><a href="/" style="color:var(--clr-accent)">← Back to Home</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script>
+  document.getElementById("yr").textContent = new Date().getFullYear();
+
+  // Dark mode
+  const btn   = document.getElementById("darkModeToggle");
+  const saved = localStorage.getItem("theme");
+  if (saved === "dark" || (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+    document.documentElement.setAttribute("data-theme", "dark");
+    btn.innerHTML = '<i class="fas fa-sun"></i>';
+  }
+  btn.addEventListener("click", () => {
+    const dark = document.documentElement.getAttribute("data-theme") === "dark";
+    if (dark) { document.documentElement.removeAttribute("data-theme"); btn.innerHTML = '<i class="fas fa-moon"></i>'; localStorage.setItem("theme", "light"); }
+    else       { document.documentElement.setAttribute("data-theme", "dark"); btn.innerHTML = '<i class="fas fa-sun"></i>'; localStorage.setItem("theme", "dark"); }
+  });
+
+  // Form submit (client-side demo — wire to a backend / form service for production)
+  document.getElementById("contactForm").addEventListener("submit", e => {
+    e.preventDefault();
+    document.getElementById("formSuccess").style.display = "block";
+    e.target.reset();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://global-news-hub-dusky.vercel.app/sitemap.xml

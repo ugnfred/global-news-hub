@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Use — Global News Hub</title>
+  <meta name="description" content="Terms of Use for Global News Hub — please read before using our service.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        integrity="sha512-Avb2QiuDEEvB4bZJYdft2mNjVShBftLdPG8FJ0V7irTLQ8Uo0qcPxh4Plq7G5tGm0rU+1SPhVotteLpBERwTkw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌐</text></svg>">
+  <style>
+    .policy-content h2 { font-size:1.2rem; font-weight:700; margin:2rem 0 .6rem; }
+    .policy-content p, .policy-content li { font-size:.93rem; line-height:1.8; color:var(--clr-text-muted); margin-bottom:.75rem; }
+    .policy-content ul { padding-left:1.4rem; list-style:disc; }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="container">
+    <a href="/" style="color:rgba(255,255,255,.6);font-size:.8rem">← Back to Global News Hub</a>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container">
+    <div class="header-inner">
+      <a href="/" class="site-logo">
+        <div class="logo-icon">GN</div>
+        <div class="logo-text"><strong>Global News Hub</strong><span>Your world. Your news.</span></div>
+      </a>
+      <button class="btn-icon" id="darkModeToggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main style="max-width:860px;margin:3rem auto;padding:0 1rem">
+  <div style="background:var(--clr-surface);border-radius:var(--radius-lg);padding:2.5rem;box-shadow:var(--shadow-md)">
+    <h1 style="font-size:2rem;font-weight:800;margin-bottom:.5rem;display:flex;align-items:center;gap:.6rem">
+      <span>📋</span> Terms of Use
+    </h1>
+    <p style="color:var(--clr-text-muted);font-size:.85rem;margin-bottom:2rem">Last updated: <span id="lastUpdated"></span></p>
+
+    <div class="policy-content">
+      <p>By accessing or using Global News Hub ("the Site"), you agree to be bound by these Terms of Use. If you do not agree, please discontinue use of the Site immediately.</p>
+
+      <h2>1. Acceptance of Terms</h2>
+      <p>These Terms constitute a legally binding agreement between you and Global News Hub. We reserve the right to update these Terms at any time. Continued use of the Site after changes constitutes acceptance of the revised Terms.</p>
+
+      <h2>2. Use of the Site</h2>
+      <p>You agree to use the Site only for lawful purposes and in a manner that does not infringe the rights of others. You must not:</p>
+      <ul>
+        <li>Scrape, harvest, or systematically collect data from the Site without written permission.</li>
+        <li>Use the Site to distribute spam, malware, or any harmful content.</li>
+        <li>Attempt to gain unauthorised access to any part of the Site or its infrastructure.</li>
+        <li>Reproduce, republish, or redistribute news articles without the original source's permission.</li>
+      </ul>
+
+      <h2>3. Intellectual Property</h2>
+      <p>News articles displayed on Global News Hub are aggregated from third-party sources and remain the intellectual property of their respective publishers. The site's original design, code, and branding are owned by Global News Hub.</p>
+
+      <h2>4. Disclaimer of Warranties</h2>
+      <p>The Site is provided on an "as is" and "as available" basis. We make no warranties, express or implied, including but not limited to fitness for a particular purpose, accuracy of content, or uninterrupted service.</p>
+
+      <h2>5. Limitation of Liability</h2>
+      <p>To the maximum extent permitted by law, Global News Hub shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Site, including reliance on financial or market information displayed herein.</p>
+
+      <h2>6. Financial Information Disclaimer</h2>
+      <p>Gold prices, stock market indices, and other financial data displayed on the Site are provided for informational purposes only and do not constitute financial advice. Always consult a qualified financial advisor before making investment decisions.</p>
+
+      <h2>7. External Links</h2>
+      <p>The Site contains links to third-party websites. We are not responsible for the content, privacy practices, or accuracy of any third-party sites.</p>
+
+      <h2>8. Governing Law</h2>
+      <p>These Terms shall be governed by and construed in accordance with applicable law. Any disputes shall be subject to the exclusive jurisdiction of the competent courts.</p>
+
+      <h2>9. Contact</h2>
+      <p>For questions regarding these Terms, please <a href="contact.html" style="color:var(--clr-primary)">contact us</a>.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" style="margin-top:3rem">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© <span id="yr"></span> Global News Hub. All rights reserved.</p>
+      <p><a href="/" style="color:var(--clr-accent)">← Back to Home</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/config.js"></script>
+<script>
+  document.getElementById("yr").textContent = new Date().getFullYear();
+  document.getElementById("lastUpdated").textContent = new Date().toLocaleDateString(undefined, { year:"numeric", month:"long", day:"numeric" });
+
+  const btn   = document.getElementById("darkModeToggle");
+  const saved = localStorage.getItem("theme");
+  if (saved === "dark" || (!saved && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+    document.documentElement.setAttribute("data-theme", "dark");
+    btn.innerHTML = '<i class="fas fa-sun"></i>';
+  }
+  btn.addEventListener("click", () => {
+    const dark = document.documentElement.getAttribute("data-theme") === "dark";
+    if (dark) { document.documentElement.removeAttribute("data-theme"); btn.innerHTML = '<i class="fas fa-moon"></i>'; localStorage.setItem("theme", "light"); }
+    else       { document.documentElement.setAttribute("data-theme", "dark"); btn.innerHTML = '<i class="fas fa-sun"></i>'; localStorage.setItem("theme", "dark"); }
+  });
+</script>
+</body>
+</html>
